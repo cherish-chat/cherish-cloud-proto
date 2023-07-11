@@ -1,0 +1,38 @@
+syntax = "proto3";
+package pb;
+option go_package = "./signalingpb";
+import "types.signaling.proto";
+
+// *************************************************** 给peer端用 **************************************************** //
+
+// GetAnswerReq 获取answer请求
+message GetAnswerReq {
+  string appId = 1;
+  string sdp = 2;
+}
+
+// GetAnswerResp 获取answer响应
+message GetAnswerResp {
+  string sdp = 1;
+}
+
+service peerService {
+  rpc GetAnswer(GetAnswerReq) returns (GetAnswerResp);
+}
+
+// *************************************************** 内部 **************************************************** //
+
+// AuthPeerReq 认证请求
+message AuthPeerReq {
+  string appId = 1;
+  string appSecret = 2;
+}
+
+// AuthPeerResp 认证响应
+message AuthPeerResp {
+  bool ok = 1;
+}
+
+service internalAuthService {
+  rpc AuthPeer(AuthPeerReq) returns (AuthPeerResp);
+}
